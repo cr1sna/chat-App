@@ -21,16 +21,18 @@ io.on("connection", socket => {
   socket.emit("message", welcomeMessage);
   socket.broadcast.emit("message", "A new user has joined");
 
-  socket.on("sendMessage", message => {
+  socket.on("sendMessage", (message, callback) => {
     // socket.emit("countUpdated", count)--> emit to only single connection.
-    io.emit("message", message); // --> emit to every single connection
+    io.emit("message", message);
+    callback("Delivered."); // --> emit to every single connection
   });
 
-  socket.on("message", coords => {
+  socket.on("location", (coords, callback) => {
     io.emit(
       "message",
-      `logitude: ${coords.logitude} latitude: ${coords.latitude}`
+      `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
     );
+    callback();
   });
 
   socket.on("disconnect", () => {
