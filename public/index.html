@@ -7,5 +7,17 @@
   </head>
   <body>
     <h1>Welcome to the chat app</h1>
+    <form action="" id="message-form">
+      <input
+        type="text"
+        name="message"
+        placeholder="message"
+        id="inputId"
+      /><button id="send">send</button>
+    </form>
+    <button id="send-location">Send location</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/chat.js"></script>
   </body>
 </html>
