@@ -9,6 +9,14 @@ const $sendLocation = document.querySelector("#send-location");
 
 //templates
 const messageTemplate = document.querySelector("#message-template").innerHTML;
+const locationTemplate = document.querySelector("#location-message-template")
+  .innerHTML;
+
+socket.on("sendLocation", url => {
+  console.log(url);
+  const html = Mustache.render(locationTemplate, { url });
+  $messages.insertAdjacentHTML("beforeend", html);
+});
 
 socket.on("message", message => {
   console.log(message);

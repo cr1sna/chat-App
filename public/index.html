@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Chat-Room</title>
   </head>
   <body>
     <h1>Welcome to the chat app</h1>
@@ -14,11 +14,18 @@
       <input type="text" name="message" placeholder="message" id="inputId" />
       <button id="send">send</button>
     </form>
+
     <button id="send-location">Send location</button>
 
     <script id="message-template" type="text/html">
       <div>
         <p>{{message}}</p>
+      </div>
+    </script>
+
+    <script id="location-message-template" type="text/html">
+      <div>
+        <p> <a href="{{url}}" target ="_blank" >My Current location</a> </p>
       </div>
     </script>
 
