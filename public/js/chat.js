@@ -14,14 +14,19 @@ const locationTemplate = document.querySelector("#location-message-template")
 
 socket.on("sendLocation", url => {
   console.log(url);
-  const html = Mustache.render(locationTemplate, { url });
+  const html = Mustache.render(locationTemplate, {
+    url: url.text,
+    dateCreated: moment(url.dateCreated).format("h:mm a")
+  });
   $messages.insertAdjacentHTML("beforeend", html);
 });
 
 socket.on("message", message => {
-  console.log(message);
+  console.log(message.text);
+
   const html = Mustache.render(messageTemplate, {
-    message
+    message: message.text,
+    dateCreated: moment(message.dateCreated).format("h:mm a")
   });
   $messages.insertAdjacentHTML("beforeend", html);
 });
@@ -49,7 +54,7 @@ $sendLocation.addEventListener("click", () => {
   $sendLocation.setAttribute("disabled", "disabled");
 
   if (!navigator.geolocation) {
-    $sendLocation.removeAttribute("disabled", "disabled");
+    $sendLocation.removeAttribute("disabled");
     return alert("Geolocation is not supported by your browser.");
   }
 
