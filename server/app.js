@@ -36,25 +36,31 @@ io.on("connection", socket => {
 
     socket.join(user.room);
 
-    socket.emit("message", generateMessage("Welcome!"));
+    socket.emit("message", generateMessage(user.username, "Welcome!"));
     socket.broadcast
       .to(user.room)
       .emit("message", generateMessage(`${user.username} has join the group`));
   });
 
   socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
+    console.log(user);
     // socket.emit("countUpdated", count)--> emit to only single connection.
-    io.emit("message", generateMessage(message));
+    io.to(user.room).emit("message", generateMessage(user.username, message));
     callback("Delivered."); // --> emit to every single connection
   });
 
   socket.on("location", (coords, callback) => {
-    io.emit(
-      "sendLocation",
-      generatelocationMessaage(
-        `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
-      )
-    ),
+    const user = getUser(socket.id);
+    io
+      .to(user.room)
+      .emit(
+        "sendLocation",
+        generatelocationMessaage(
+          user.username,
+          `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
+        )
+      ),
       callback();
   });
 

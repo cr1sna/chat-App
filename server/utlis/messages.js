@@ -2,8 +2,8 @@
 //   text;
 //   dateCreated: new Date().getTime();
 // };
-const generateMessage = text => {
-  return { text, dateCreated: new Date().getTime() };
+const generateMessage = (username, text) => {
+  return { username, text, dateCreated: new Date().getTime() };
 };
 
 const generatelocationMessaage = text => {
