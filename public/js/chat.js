@@ -19,7 +19,25 @@ const chatSidebarTemplate = document.querySelector("#sidebar-template")
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 });
-console.log(username);
+
+const autoscroll = () => {
+  //New Message Element
+  const $newMessage = $messages.lastElementChild;
+  // Height of the new Message
+  const newMessageStyles = getComputedStyle($newMessage);
+  const newMessageMargin = parseInt(newMessageStyles.marginBottom);
+  const newMessageHeight = $newMessage.offsetHeight + newMessageMargin;
+  //Visible Height
+  const VisibleHeight = $messages.offsetHeight;
+  //total height of container
+  const containerHeight = $messages.scrollHeight;
+  //How far have i scrolled ?
+  const scrolledoffset = $messages.scrollTop + VisibleHeight;
+
+  if (containerHeight - newMessageHeight <= scrolledoffset) {
+    $messages.scrollTop = $messages.scrollHeight;
+  }
+};
 
 socket.on("roomData", ({ room, user_room }) => {
   const html = Mustache.render(chatSidebarTemplate, {
@@ -36,6 +54,7 @@ socket.on("sendLocation", url => {
     dateCreated: moment(url.dateCreated).format("h:mm a")
   });
   $messages.insertAdjacentHTML("beforeend", html);
+  autoscroll();
 });
 
 socket.on("message", message => {
@@ -48,19 +67,8 @@ socket.on("message", message => {
     dateCreated: moment(message.dateCreated).format("h:mm a")
   });
   $messages.insertAdjacentHTML("beforeend", html);
+  autoscroll();
 });
-
-// socket.on("message", message => {
-//   console.log(message.text);
-//   console.log(message.username);
-
-//   const html = Mustache.render(messageTemplate, {
-//     username: message.username,
-//     message: message.text,
-//     dateCreated: moment(message.dateCreated).format("h:mm a")
-//   });
-//   $messages.insertAdjacentHTML("beforeend", html);
-// });
 
 $messageForm.addEventListener("submit", e => {
   e.preventDefault();
@@ -111,6 +119,6 @@ $sendLocation.addEventListener("click", () => {
 socket.emit("join", { username, room }, error => {
   if (error) {
     alert(error);
-    location.href("/");
+    location.href = "/";
   }
 });

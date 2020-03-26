@@ -50,7 +50,7 @@ io.on("connection", socket => {
 
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
-    console.log(user);
+
     // socket.emit("countUpdated", count)--> emit to only single connection.
     io.to(user.room).emit("message", generateMessage(user.username, message));
     callback("Delivered."); // --> emit to every single connection
