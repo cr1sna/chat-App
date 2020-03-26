@@ -6,8 +6,8 @@ const generateMessage = (username, text) => {
   return { username, text, dateCreated: new Date().getTime() };
 };
 
-const generatelocationMessaage = text => {
-  return { text, dateCreated: new Date().getTime() };
+const generatelocationMessaage = (username, url) => {
+  return { username, url, dateCreated: new Date().getTime() };
 };
 
 // console.log(generateMessage("Welcome"));

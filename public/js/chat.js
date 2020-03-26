@@ -47,10 +47,12 @@ socket.on("roomData", ({ room, user_room }) => {
   $sidebar.innerHTML = html;
 });
 
-socket.on("sendLocation", url => {
-  console.log(url);
+socket.on("sendLocation", ({ username, url }) => {
+  console.log(username);
+
   const html = Mustache.render(locationTemplate, {
-    url: url.text,
+    username,
+    url,
     dateCreated: moment(url.dateCreated).format("h:mm a")
   });
   $messages.insertAdjacentHTML("beforeend", html);
@@ -106,7 +108,6 @@ $sendLocation.addEventListener("click", () => {
       },
       error => {
         $sendLocation.removeAttribute("disabled");
-
         if (error) {
           return console.log(error);
         }
