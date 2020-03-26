@@ -3,7 +3,7 @@ const users = [];
 //addUser, removeUser , getUser , getUsersInRoom
 const addUser = ({ id, username, room }) => {
   //Cleaning the data
-  username = username.trim();
+  username = username.trim().toLowerCase();
   room = room.trim();
 
   if (!username || !room) {
