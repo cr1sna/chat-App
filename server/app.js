@@ -37,9 +37,15 @@ io.on("connection", socket => {
     socket.join(user.room);
 
     socket.emit("message", generateMessage(user.username, "Welcome!"));
+
     socket.broadcast
       .to(user.room)
       .emit("message", generateMessage(`${user.username} has join the group`));
+
+    io.to(user.room).emit("roomData", {
+      room: user.room,
+      user_room: getUsersInRoom(user.room)
+    });
   });
 
   socket.on("sendMessage", (message, callback) => {
@@ -72,6 +78,10 @@ io.on("connection", socket => {
         "message",
         generateMessage(`${user.username}  leaves a group`)
       );
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getUsersInRoom(user.room)
+      });
     }
   });
 });

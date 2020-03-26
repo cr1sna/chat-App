@@ -3,8 +3,8 @@ const users = [];
 //addUser, removeUser , getUser , getUsersInRoom
 const addUser = ({ id, username, room }) => {
   //Cleaning the data
-  username = username.trim().toLowerCase();
-  room = room.trim().toLowerCase();
+  username = username.trim();
+  room = room.trim();
 
   if (!username || !room) {
     return {
@@ -49,6 +49,10 @@ const getUser = id => {
 const getUsersInRoom = room => {
   return users.filter(user => user.room === room);
 };
+// addUser({ id: 12, username: "Prativa", room: "girlfriend" });
+// addUser({ id: 12, username: "Susmita", room: "girlfriend" });
+// addUser({ id: 12, username: "Susmita", room: "friend" });
+// console.log(getUsersInRoom("girlfriend"));
 
 module.exports = {
   addUser,

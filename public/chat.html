@@ -10,7 +10,7 @@
 
   <body>
     <div class="chat">
-      <div class="chat__sidebar"></div>
+      <div id="side-bar" class="chat__sidebar"></div>
 
       <div class="chat__main">
         <h1>Welcome to the chat app</h1>
@@ -43,10 +43,23 @@
       </div>
     </script>
 
+    <script id="sidebar-template" type="text/html">
+
+        <h1 class="room-title">{{room}}</h1>
+        <h3 class="list-tittle">Active Users</h2>
+        <ul class="users">
+          {{#user_room}}
+          <li>{{username}}</li>
+          {{/user_room}}
+
+        </ul>
+      </div>
+    </script>
+
     <script id="location-message-template" type="text/html">
       <div class="message">
         <p>
-          <span class="message__name">Some User Name</span>
+          <span class="message__name">{{username}}</span>
           <span class="message__meta">{{dateCreated}}</span>
         </p>
 
